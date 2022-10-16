@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+
+    <body>
+        <div class="main">
+            <form action="" method="POST" class="form" id="form-1">
+                <h3 class="heading">Đăng ký</h3>
+                <p class="disc">Đăng ký tài khoản</p>
+                <div class="spacer"></div>
+
+                <div class="form-group">
+                    <label for="full-name" class="form-label">Tên đầy đủ</label>
+                    <input
+                        id="full-name"
+                        name="full-name"
+                        type="text"
+                        placeholder="VD: Nguyễn Hải Hậu"
+                        class="form-control"
+                    />
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" name="email" type="text" placeholder="VD: email@gmail.com" class="form-control" />
+                    <span class="form-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input id="password" name="password" type="text" placeholder="Nhập mật khẩu" class="form-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password-confirmation" class="form-label">Nhập lại mật khẩu</label>
+                    <input
+                        id="password-confirmation"
+                        name="password-confirmation"
+                        type="text"
+                        placeholder="Nhập lại mật khẩu"
+                        class="form-control"
+                    />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="avatar" class="form-label">Ảnh đại điện</label>
+                    <input id="avatar" name="avatar" type="file" class="form-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="province" class="form-label">Nhập lại mật khẩu</label>
+                    <select id="province" name="province" class="form-control">
+                        <option value="">Chọn Tỉnh/TP</option>
+                        <option value="hni">Hà Nội</option>
+                        <option value="hcm">TP.HCM</option>
+                        <option value="hpg">Hải Phòng</option>
+                    </select>
+                    <span class="form-message"></span>
+                </div>
+                <button class="form-submit">Đăng ký</button>
+            </form>
+        </div>
+
+        <script src="./validator.js"></script>
+        <script>
+            Validator({
+                form: '#form-1',
+                formGroupSelector: '.form-group',
+                errorSelector: '.form-message',
+                rules: [
+                    Validator.isRequired('#full-name', 'Vui lòng nhập tên đầy đủ của bạn'),
+                    Validator.isRequired('#email'),
+                    Validator.isEmail('#email', 'Vui lòng nhập đúng địa chỉ emai của bạn'),
+                    Validator.minLength('#password', 6, 'Mật khẩu phải bao gồm 1 chữ thường, 1 in hoa và 1 chữ số'),
+                    Validator.isRequired('#password-confirmation'),
+                    Validator.isConfirmed(
+                        '#password-confirmation',
+                        function () {
+                            return document.querySelector('#form-1 #password').value
+                        },
+                        'Mật khẩu nhập lại không chính xác',
+                    ),
+                    // Validator.isRequired('#avatar'),
+                    Validator.isRequired('#province'),
+                    Validator.isRequired('[name="gender"]'),
+                    // Validator.isRequired('[name="job"]'),
+                ],
+                onSubmit: function (data) {
+                    // Call API
+                    console.log(data)
+                },
+            })
+        </script>
+    </body>
+</html>
